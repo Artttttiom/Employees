@@ -25,7 +25,7 @@ class UserController extends Controller
 
 
     public function index() {
-        $users = Users::query()->paginate(15);
+        $users = Users::query()->with('UserBusinessTrips')->paginate(15);
 
         return response()->json([
             'count' => count($users),

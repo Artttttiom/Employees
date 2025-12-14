@@ -13,8 +13,9 @@ class Assets extends Model
         'age'
     ];
 
+    public function UserBusinessTrips() {
+        return $this->hasMany(UserBusinessTrips::class);
+    }
 
 
-
-    
 }

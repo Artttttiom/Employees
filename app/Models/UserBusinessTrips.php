@@ -11,7 +11,7 @@ class UserBusinessTrips extends Model
         'name',
         'description',
         'asset_id',
-        'users_id'
+        'user_id'
     ];
 
     public function asset(): BelongsTo {

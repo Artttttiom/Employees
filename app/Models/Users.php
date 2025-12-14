@@ -13,4 +13,8 @@ class Users extends Model
         'age',
         'gender'
     ];
+
+    public function UserBusinessTrips() {
+        return $this->hasMany(UserBusinessTrips::class);
+    }
 }
