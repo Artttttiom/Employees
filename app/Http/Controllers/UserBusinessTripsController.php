@@ -55,12 +55,12 @@ class UserBusinessTripsController extends Controller
                 'message' => 'Командировка не найдена'
             ], 404);
         }
-        $data = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:255'],
-            'asset_id' => 'required', 'exist:assets,id',
-            'users_id' => ['required', 'exist:users,id']
-        ])->validate();
+        $data = $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'description' => ['required', 'string', 'max:255'],
+        'asset_id' => ['required', 'exists:assets,id'],
+        'user_id' => ['required', 'exists:users,id']
+        ]);
 
         $user_business_trips = UserBusinessTrips::query()->update($data);
 
