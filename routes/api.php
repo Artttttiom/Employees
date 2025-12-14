@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\PlaylistSongController;
+use App\Http\Controllers\SongController;
 use App\Http\Controllers\UserBusinessTripsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -34,4 +37,17 @@ Route::get('user-business-trips', [UserBusinessTripsController::class, 'index'])
 Route::get('user-business-trip/{id}', [UserBusinessTripsController::class, 'show']);
 Route::delete('delete-business-trip/{id}', [UserBusinessTripsController::class, 'destroy']);
 
-//4
+//Песни
+Route::post('song', [SongController::class, 'store']);
+Route::patch('song/{id}', [SongController::class, 'update']);
+Route::get('songs', [SongController::class, 'index']);
+Route::get('song/{id}', [SongController::class, 'show']);
+Route::delete('song/{id}', [SongController::class, 'destroy']);
+
+//Плейлисты
+Route::post('playlist', [PlaylistController::class, 'store']);
+Route::patch('playlist/{id}', [PlaylistController::class, 'update']);
+Route::get('playlists', [PlaylistController::class, 'index']);
+Route::get('playlists/{id}', [PlaylistController::class, 'show']);
+Route::delete('playlist/{id}', [PlaylistController::class, 'destroy']);
+Route::post('add-song', [PlaylistSongController::class, 'AddSongToPlaylist']);
