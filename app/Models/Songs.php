@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Songs extends Model
 {
-    protected  $fiillable = [
+    protected  $fillable = [
         'title',
         'description',
         'performer'

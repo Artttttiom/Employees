@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Playlists extends Model
 {
-    protected $fiillable = [
+    protected $fillable = [
         'name'
     ];
 

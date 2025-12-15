@@ -48,6 +48,7 @@ Route::delete('song/{id}', [SongController::class, 'destroy']);
 Route::post('playlist', [PlaylistController::class, 'store']);
 Route::patch('playlist/{id}', [PlaylistController::class, 'update']);
 Route::get('playlists', [PlaylistController::class, 'index']);
-Route::get('playlists/{id}', [PlaylistController::class, 'show']);
+Route::get('playlist/{id}', [PlaylistController::class, 'show']);
 Route::delete('playlist/{id}', [PlaylistController::class, 'destroy']);
 Route::post('add-song', [PlaylistSongController::class, 'AddSongToPlaylist']);
+Route::delete('delete-song', [PlaylistSongController::class, 'DestroySongFromPlaylist']);

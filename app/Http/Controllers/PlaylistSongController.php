@@ -22,6 +22,24 @@ class PlaylistSongController extends Controller
     }
 
     public function DestroySongFromPlaylist(Request $request) {
-        
+        $data = $request->validate([
+            'song_id' => ['required', 'exists:playlists_songs.song_id'],
+            'playlist_id' => ['required', 'exists:playlists_songs.song_id']
+        ]);
+
+        $playlist_song = PlaylistsSongs::query()->where('song_id',$data['song_id'])->where('playlist_id', $data['playlist_id']);
+       
+        if (!$playlist_song) 
+        {
+            return response()->json([
+                'message' => 'Песня в данном плейслисте отсутствует'
+            ], 404);
+        }
+
+        $playlist_song = PlaylistsSongs::query()->delete;
+
+        return response()->json([
+            'message' => 'Песня успешно удалена из плейлиста'
+        ], 200);
     }
 }
