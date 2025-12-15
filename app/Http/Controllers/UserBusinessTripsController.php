@@ -4,16 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
+use App\Http\Requests\UserBusinessTripRequest;
 use App\Models\UserBusinessTrips;
 class UserBusinessTripsController extends Controller
 {
-    public function store(Request $request) {
-    $data = $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'description' => ['required', 'string', 'max:255'],
-        'asset_id' => ['required', 'exists:assets,id'],
-        'user_id' => ['required', 'exists:users,id']
-    ]);
+    public function store(UserBusinessTripRequest $request) {
+    $data = $request->validated();
     
     $user_business_trips = UserBusinessTrips::create($data);
     
