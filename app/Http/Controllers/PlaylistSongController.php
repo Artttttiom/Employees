@@ -27,14 +27,9 @@ class PlaylistSongController extends Controller
             'playlist_id' => ['required', 'exists:playlists_songs.song_id']
         ]);
 
-        $playlist_song = PlaylistsSongs::query()->where('song_id',$data['song_id'])->where('playlist_id', $data['playlist_id']);
-       
-        if (!$playlist_song) 
-        {
-            return response()->json([
-                'message' => 'Песня в данном плейслисте отсутствует'
-            ], 404);
-        }
+        $playlist_song = PlaylistsSongs::query()
+        ->where('song_id',$data['song_id'])
+        ->where('playlist_id', $data['playlist_id'])-delete();
 
         $playlist_song = PlaylistsSongs::query()->delete;
 
@@ -43,3 +38,9 @@ class PlaylistSongController extends Controller
         ], 200);
     }
 }
+
+//Добавить файлы валидации на Песни, Плейлисты, Пользователей, Паганацию,Командировки,Активы
+//Добавить сортировки и фильтрации в методы index Песни, Плейлисты, Пользователей, Паганацию,Командировки,Активы
+//Добавить массив песен в получение плейслистов
+//Добавить связь пользователь-плейслист->песни и возвращать пользователя с его плейслистами
+

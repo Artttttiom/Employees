@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AssetsRequest;
 use Illuminate\Http\Request;
 use App\Models\Assets;
 
 class AssetController extends Controller
 {
-    public function store(Request $request) {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:255']
-        ]);
+    public function store(AssetsRequest $request) {
+       
+        $data = $request->validated();
 
         $asset = Assets::query()->create($data);
 

@@ -4,11 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserBusinessTripRequest extends FormRequest
-
+class UserBusinessTripsRequest extends FormRequest
 {
 
-    public function rules(): array 
+        public function rules(): array 
     {
         return [
         'name' => ['required', 'string', 'max:255'],
@@ -19,7 +18,7 @@ class UserBusinessTripRequest extends FormRequest
     }
 
 
-    public function messages()
+        public function messages()
     {
         return [
             'name.required' => 'Поле name обязательное',
@@ -28,13 +27,11 @@ class UserBusinessTripRequest extends FormRequest
             'description.required' => 'Поле description обязательное',
             'description.string' => 'Поле description должно быть string',
             'description.max' => 'Длинна поля description должна быть меньше 255 символов',
-            'asset_id.required' => 'Поле name обязательное',
+            'asset_id.required' => 'Поле "ID актива" обязательно для заполнения',
             'asset_id.exists' => 'Актив с данным id отсутствует',
-            'user_id.required' => 'Поле name обязательное',
+            'user_id.required' => 'Поле "ID пользователя" обязательно для заполнения',
             'user_id.exists' => 'Пользователь с данным id отсутствует',
 
         ];
     }
-
-
 }

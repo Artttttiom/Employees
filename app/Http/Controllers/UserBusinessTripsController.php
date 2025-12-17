@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Validator;
-use App\Http\Requests\UserBusinessTripRequest;
+use App\Http\Requests\UserBusinessTripsRequest;
 use App\Models\UserBusinessTrips;
 class UserBusinessTripsController extends Controller
 {
-    public function store(UserBusinessTripRequest $request) {
+    public function store(UserBusinessTripsRequest $request) 
+    {
     $data = $request->validated();
     
     $user_business_trips = UserBusinessTrips::create($data);
@@ -17,10 +17,11 @@ class UserBusinessTripsController extends Controller
         'data' => $user_business_trips,
         'message' => 'Командировка успешно создана'
     ], 201);
-}
+    }
 
 
-    public function index() {
+    public function index() 
+    {
         $user_business_trips = UserBusinessTrips::query()->paginate(15);
 
         return response()->json([
@@ -28,7 +29,8 @@ class UserBusinessTripsController extends Controller
         ], 200);
     }
 
-    public function show($id) {
+    public function show($id) 
+    {
         $user_business_trips = UserBusinessTrips::query()->find($id);
 
         if (!$user_business_trips) {
@@ -43,7 +45,10 @@ class UserBusinessTripsController extends Controller
     }
 
 
-    public function update(Request $request, $id) {
+    public function update(UserBusinessTripsRequest $request, $id) 
+    {
+        $data = $request->validated();
+
         $user_business_trips = UserBusinessTrips::query()->find($id);
 
         if (!$user_business_trips) {
@@ -51,12 +56,6 @@ class UserBusinessTripsController extends Controller
                 'message' => 'Командировка не найдена'
             ], 404);
         }
-        $data = $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'description' => ['required', 'string', 'max:255'],
-        'asset_id' => ['required', 'exists:assets,id'],
-        'user_id' => ['required', 'exists:users,id']
-        ]);
 
         $user_business_trips = UserBusinessTrips::query()->update($data);
 
@@ -66,7 +65,8 @@ class UserBusinessTripsController extends Controller
     }
 
 
-    public function destroy($id) {
+    public function destroy($id) 
+    {
         $user_business_trips = UserBusinessTrips::query()->find($id);
 
         if (!$user_business_trips) {
