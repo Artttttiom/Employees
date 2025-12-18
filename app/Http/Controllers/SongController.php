@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Songs;
 use Illuminate\Http\Request;
+use App\Http\Requests\SongsRequest;
 
 class SongController extends Controller
 {
-    public function store(Request $request) {
-        $data = $request->validate([
-            'title' => ['string', 'max:255'],
-            'description' => ['string', 'max:255'],
-            'performer' => ['string', 'max:255']
-        ]);
+    public function store(SongsRequest $request) 
+    {
+
+        $data = $request->validated();
 
         $song = Songs::query()->create($data);
 
@@ -22,7 +21,8 @@ class SongController extends Controller
         ], 201);
     }
 
-    public function index() {
+    public function index() 
+    {
         $songs = Songs::query()->paginate(15);
 
         return response()->json([
@@ -31,7 +31,8 @@ class SongController extends Controller
     }
 
 
-    public function show($id) {
+    public function show($id) 
+    {
         $song = Songs::query()->find($id);
 
         if (!$song) {
@@ -45,7 +46,11 @@ class SongController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $id) {
+    public function update(SongsRequest $request, $id) 
+    {
+
+        $data = $request->validated();
+
         $song = Songs::query()->find($id);
 
         if (!$song) {
@@ -54,11 +59,6 @@ class SongController extends Controller
             ], 404);
         }
        
-        $data = $request->validate([
-        'title' => ['string', 'max:255'],
-        'description' => ['string', 'max:255'],
-        'performer' => ['string', 'max:255']
-        ]);
 
         $song = Songs::query()->update($data);
 
@@ -67,7 +67,8 @@ class SongController extends Controller
         ], 200);
     }
 
-    public function destroy($id) {
+    public function destroy($id) 
+    {
         $song = Songs::query()->find($id);
 
         if (!$song) {

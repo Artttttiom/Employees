@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 use App\Models\Users;
+use App\Http\Requests\UsersRequest;
 
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function store(Request $request) {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'surname' => ['required', 'string', 'max:255'],
-            'patronymic' => ['required', 'string', 'max:255'],
-            'age' => ['required', 'integer']
-        ]);
+    public function store(UsersRequest $request) 
+    {
+        $data = $request->validated();
 
         $user = Users::query()->create($data);
 
@@ -24,7 +21,8 @@ class UserController extends Controller
     }
 
 
-    public function index() {
+    public function index() 
+    {
         $users = Users::query()->with('UserBusinessTrips')->paginate(15);
 
         return response()->json([
@@ -34,7 +32,8 @@ class UserController extends Controller
     }
 
 
-    public function show($id) {
+    public function show($id) 
+    {
         $user = Users::query()->find($id);
 
         if (!$user) {
@@ -48,7 +47,11 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $id) {
+    public function update(UsersRequest $request, $id) 
+    {
+
+        $data  = $request->validated();
+
         $user = Users::query()->find($id);
 
         if (!$user) {
@@ -57,12 +60,6 @@ class UserController extends Controller
             ], 404);
         }
 
-        $data  = $request->validate([
-            'name' => ['nullable', 'string', 'max:255'],
-            'surname' => ['nullable', 'string', 'max:255'],
-            'patronymic' => ['nullable', 'string', 'max:255'],
-            'age' => ['nullable', 'integer']
-        ]);
 
         $user = Users::query()->update($data);
 
@@ -72,7 +69,8 @@ class UserController extends Controller
     }
 
 
-    public function destroy($id) {
+    public function destroy($id) 
+    {
         $user = Users::query()->find($id);
 
         if (!$user) {

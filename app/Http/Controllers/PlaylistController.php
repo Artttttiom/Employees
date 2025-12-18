@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Playlists;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\PlaylistsRequest;
 class PlaylistController extends Controller
 {
-    public function store(Request $request) {
-        $data = $request->validate([
-            'name' => ['required', 'string']
-        ]);
+    public function store(PlaylistsRequest $request) 
+    { 
+        $data = $request->validated();
 
         $playlist = Playlists::query()->create($data);
 
@@ -21,7 +20,8 @@ class PlaylistController extends Controller
     }
 
 
-    public function index() {
+    public function index() 
+    {
         $playlist = Playlists::query()->paginate(15);
 
         return response()->json([
@@ -29,7 +29,8 @@ class PlaylistController extends Controller
         ], 200);
     }
 
-    public function show($id) {
+    public function show($id) 
+    {
         $playlist = Playlists::query()->find($id);
 
         if (!$playlist) {
@@ -43,7 +44,11 @@ class PlaylistController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $id) {
+    public function update(PlaylistsRequest $request, $id) 
+    {
+        
+        $data = $request->validated();
+
         $playlist  = Playlists::query()->find($id);
 
         if (!$playlist) {
@@ -52,9 +57,6 @@ class PlaylistController extends Controller
             ], 404);
         }
 
-        $data = $request->validate([
-        'name' => ['required', 'string']
-        ]);
 
         $playlist = Playlists::query()->update($data);
 

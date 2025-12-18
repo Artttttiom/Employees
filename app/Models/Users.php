@@ -17,4 +17,8 @@ class Users extends Model
     public function UserBusinessTrips() {
         return $this->hasMany(UserBusinessTrips::class);
     }
+
+    public function playlists() {
+        return $this->hasMany(Playlists::class);
+    }
 }

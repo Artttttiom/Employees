@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\PlaylistsSongs;
 use Illuminate\Http\Request;
+use App\Http\Requests\PlaylistSongsRequest;
 
 class PlaylistSongController extends Controller
 {
-     public function AddSongToPlaylist(Request $request) {
-        $data = $request->validate([
-            'song_id' => ['required', 'exists:songs.id'],
-            'playlist_id' => ['required', 'exists:playlists.id']
-        ]);
+     public function AddSongToPlaylist(PlaylistSongsRequest $request) 
+     {
+        
+        $data = $request->validated();
 
         $playlists_song = PlaylistsSongs::create($data);
 
@@ -21,11 +21,10 @@ class PlaylistSongController extends Controller
 
     }
 
-    public function DestroySongFromPlaylist(Request $request) {
-        $data = $request->validate([
-            'song_id' => ['required', 'exists:playlists_songs.song_id'],
-            'playlist_id' => ['required', 'exists:playlists_songs.song_id']
-        ]);
+    public function DestroySongFromPlaylist(PlaylistSongsRequest $request) 
+    {
+        
+        $data = $request->validated();
 
         $playlist_song = PlaylistsSongs::query()
         ->where('song_id',$data['song_id'])

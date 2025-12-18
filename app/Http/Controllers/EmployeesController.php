@@ -4,18 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Employees;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\EmployeesRequest;
 class EmployeesController extends Controller
 {
-    public function store(Request $request) {
+    public function store(EmployeesRequest $request) 
+    {
 
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255' ],
-            'surname' => ['required', 'string', 'max:255'],
-            'patronymic' => ['required', 'string', 'max:255'],
-            'age' => ['required', 'integer'],
-            'gender' => ['required', 'string']
-        ]);
+        $data = $request->validated();
 
         $employees = Employees::query()->create($data);
 
@@ -26,7 +21,8 @@ class EmployeesController extends Controller
     }
 
 
-    public function index() {
+    public function index() 
+    {
         $employees = Employees::query()->paginate(15);
 
         return response()->json([
@@ -36,7 +32,8 @@ class EmployeesController extends Controller
     }
 
 
-    public function categories() {
+    public function categories() 
+    {
 
         $categories = [
             'Manager' => [
@@ -61,7 +58,8 @@ class EmployeesController extends Controller
             'count' => count($categories)
         ], 200); 
     }
-    public function show($id) {
+    public function show($id) 
+    {
         $employee = Employees::query()->find($id);
 
         if ($employee->id % 2 == 0) {

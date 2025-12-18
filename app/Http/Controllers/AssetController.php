@@ -8,7 +8,8 @@ use App\Models\Assets;
 
 class AssetController extends Controller
 {
-    public function store(AssetsRequest $request) {
+    public function store(AssetsRequest $request) 
+    {
        
         $data = $request->validated();
 
@@ -21,7 +22,8 @@ class AssetController extends Controller
     }
 
 
-    public function index() {
+    public function index() 
+    {
         $assets = Assets::query()->paginate(15);
 
         return response()->json([
@@ -31,7 +33,8 @@ class AssetController extends Controller
     }
 
 
-    public function show($id) {
+    public function show($id) 
+    {
         $asset = Assets::query()->find($id);
 
         if (!$asset) {
@@ -45,7 +48,9 @@ class AssetController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $id) {
+    public function update(AssetsRequest $request, $id) 
+    {
+        $data = $request->validated();
 
         $asset = Assets::query()->find($id);
         
@@ -55,11 +60,6 @@ class AssetController extends Controller
             ], 404);
         }
 
-        $data = $request->validate([
-            'name' => ['nullable', 'string', "max:255"],
-            'description' => ['nullable', 'string', "max:255"]
-        ]);
-
         $asset = Assets::query()->update($data);
 
         return response()->json([
@@ -68,7 +68,8 @@ class AssetController extends Controller
     }
 
 
-    public function destroy($id) {
+    public function destroy($id) 
+    {
         $asset = Assets::query()->find($id);
 
         if (!$asset) {
