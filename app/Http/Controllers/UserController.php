@@ -21,11 +21,22 @@ class UserController extends Controller
     }
 
 
-    public function index() 
+    public function index(Request $request) 
     {
-        $users = Users::query()->with('UserBusinessTrips')->paginate(15);
-
-        return response()->json([
+        $users = Users::query()->paginate(15);
+        $usersNew = Users::query()
+        ->when($request['sort'] && $request['field'], function ($query) use ($request) {
+            return $query->orderBy($request['field'], $request['sort']);
+        })
+        ->when(!empty($request['start_date']) && !empty($request['end_date']), function ($query) use ($request) {
+            return $query->whereBetween('created_at', [$request['start_date'], $request['end_date']]);
+        })
+        ->when(!empty($request['dates']), function ($query) use ($request) {
+            return $query->whereBetween('created_at', $request['dates']);
+        })
+        ->get();
+        
+            return response()->json([
             'count' => count($users),
             'users' => $users
         ], 200);    
