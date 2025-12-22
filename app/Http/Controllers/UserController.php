@@ -37,8 +37,8 @@ class UserController extends Controller
         ->get();
         
             return response()->json([
-            'count' => count($users),
-            'users' => $users
+            'count' => count($usersNew),
+            'users' => $usersNew
         ], 200);    
     }
 
