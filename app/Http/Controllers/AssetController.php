@@ -22,13 +22,24 @@ class AssetController extends Controller
     }
 
 
-    public function index() 
+    public function index(Request $request) 
     {
         $assets = Assets::query()->paginate(15);
+        $assetNew = Assets::query()
+        ->when($request['sort'] && $request['field'], function ($query) use ($request) {
+            return $query->orderBy($request['field'], $request['sort']);
+        })
+        ->when(!empty($request['start_date']) && !empty($request['end_date']), function ($query) use ($request) {
+            return $query->whereBetween('created_at', [$request['start_date'], $request['end_date']]);
+        })
+        ->when(!empty($request['dates']), function ($query) use ($request) {
+            return $query->whereBetween('created_at', $request['dates']);
+        })
+        ->get();
 
         return response()->json([
-            'count' => count($assets),
-            'assets' => $assets
+            'count' => count($$assetNew),
+            'assets' => $$assetNew
         ],200);
     }
 
